@@ -11,27 +11,24 @@ public class HeartController : MonoBehaviour {
 	// Use this for initialization
 	protected void Start () {
 		m_initialPosition = transform.localPosition;
+        m_initialRotation = transform.localRotation;
 	}
 	
 	// Update is called once per frame
 	protected void Update () {
-		if ( m_controller == null ){
+		if ( m_controller == null )
 			m_controller = SixenseInput.GetController( SixenseHands.RIGHT );
-		}
-		UpdateHeart( )
-
+        UpdateHeart();
 	}
 
 	void UpdateHeart( )
 	{
-		bool bControllerActive = IsControllerActive( hand.m_controller );
+		bool bControllerActive = IsControllerActive( m_controller );
 		
-		if ( bControllerActive ){
-			transform.localRotation = hand.m_controller.Rotation * hand.InitialRotation;
-		}
-		else{
+		if ( bControllerActive )
+			transform.localRotation = m_controller.Rotation * InitialRotation;
+		else
 			// use the inital position and orientation because the controller is not active
 			hand.transform.localRotation  = hand.InitialRotation;
-		}
 	}
 }
